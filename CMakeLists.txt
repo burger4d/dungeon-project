@@ -11,6 +11,12 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SDL3)
 
-add_executable(dungeon src/dungeon.cc)
+add_executable(dungeon)
+
+target_sources(dungeon
+    PRIVATE
+        src/dungeon.cc
+        src/maze/maze.cc
+)
 
 target_link_libraries(dungeon PRIVATE SDL3::SDL3)
