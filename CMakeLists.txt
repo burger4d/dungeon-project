@@ -19,7 +19,7 @@ target_sources(dungeon
         src/maze/maze.cc
 )
 
-target_compile_options(dungeon PRIVATE -g -fsanitize=address)
-target_link_options(dungeon PRIVATE -fsanitize=address)
+#target_compile_options(dungeon PRIVATE -g -fsanitize=address)
+#target_link_options(dungeon PRIVATE -fsanitize=address)
 
 target_link_libraries(dungeon PRIVATE SDL3::SDL3)
