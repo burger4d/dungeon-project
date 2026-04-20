@@ -7,12 +7,15 @@ int main()
 {
     SDL_Init(SDL_INIT_VIDEO);
 
-    auto m = maze(5);
+    auto m = maze(125);
     for (size_t i = 0; i < m.size(); i++)
     {
         for (size_t j = 0; j < m.size(); j++)
         {
-            std::cout << m[i][j];
+            if (m[i][j])
+                std::cout << "#";
+            else
+                std::cout << " ";
         }
         std::cout << "\n";
     }
