@@ -6,7 +6,7 @@ int main()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
-    SDL_Window*   window   = SDL_CreateWindow("dungeon", 320, 240, SDL_WINDOW_RESIZABLE);
+    SDL_Window*   window   = SDL_CreateWindow("dungeon", 400, 400, SDL_WINDOW_RESIZABLE);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
     SDL_Texture*  texture  = IMG_LoadTexture(renderer, "images/catacombes.jpeg");
 
@@ -15,12 +15,12 @@ int main()
     MIX_Mixer* mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
     if (!mixer) { SDL_Log("MIX_CreateMixerDevice failed: %s", SDL_GetError()); }
 
-    MIX_Audio* audio = MIX_LoadAudio(mixer, "soundtracks/taira-komori__horror_zone01.mp3", false);
+    MIX_Audio* audio = MIX_LoadAudio(mixer, "soundtracks/taira-komori__hell_bell.mp3", false);
     if (!audio) { SDL_Log("MIX_LoadAudio failed: %s", SDL_GetError()); }
     
     MIX_Track* track = MIX_CreateTrack(mixer);
     MIX_SetTrackAudio(track, audio);
-    MIX_PlayTrack(track, 0);
+    MIX_PlayTrack(track, -1);
 
     bool running = true;
     SDL_Event event;
