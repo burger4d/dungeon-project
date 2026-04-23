@@ -1,57 +1,62 @@
 #include "game.hh"
 
-void Game::run()
+Game::Game()
 {
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
-    SDL_Window *window =
-        SDL_CreateWindow("dungeon", 400, 400, SDL_WINDOW_RESIZABLE);
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
-    SDL_Texture *texture = IMG_LoadTexture(renderer, "images/catacombes.jpeg");
+    window_ = SDL_CreateWindow("dungeon", 400, 400, SDL_WINDOW_RESIZABLE);
+    renderer_ = SDL_CreateRenderer(window_, NULL);
 
-    // Modern SDL3_mixer API — Mix_OpenAudio/Mix_LoadMUS are gone
+    texture_ = IMG_LoadTexture(renderer_, "images/catacombes.jpeg");
+
     MIX_Init();
-    MIX_Mixer *mixer =
-        MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
-    if (!mixer)
+    mixer_ = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+    if (!mixer_)
     {
         SDL_Log("MIX_CreateMixerDevice failed: %s", SDL_GetError());
     }
 
-    MIX_Audio *audio =
-        MIX_LoadAudio(mixer, "soundtracks/taira-komori__hell_bell.mp3", false);
-    if (!audio)
+    audio_ =
+        MIX_LoadAudio(mixer_, "soundtracks/taira-komori__hell_bell.mp3", false);
+    if (!audio_)
     {
         SDL_Log("MIX_LoadAudio failed: %s", SDL_GetError());
     }
 
-    MIX_Track *track = MIX_CreateTrack(mixer);
-    MIX_SetTrackAudio(track, audio);
+    track_ = MIX_CreateTrack(mixer_);
+    MIX_SetTrackAudio(track_, audio_);
 
     SDL_PropertiesID props = SDL_CreateProperties();
     SDL_SetNumberProperty(props, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
-    MIX_PlayTrack(track, props);
+    MIX_PlayTrack(track_, props);
     SDL_DestroyProperties(props);
 
-    bool running = true;
+    running_ = true;
+}
+
+Game::~Game()
+{
+    MIX_DestroyAudio(audio_);
+    MIX_DestroyMixer(mixer_);
+    MIX_Quit();
+    SDL_DestroyTexture(texture_);
+    SDL_DestroyRenderer(renderer_);
+    SDL_DestroyWindow(window_);
+    SDL_Quit();
+}
+
+void Game::run()
+{
     SDL_Event event;
-    while (running)
+    while (running_)
     {
         while (SDL_PollEvent(&event))
             if (event.type == SDL_EVENT_QUIT)
-                running = false;
+                running_ = false;
 
-        SDL_RenderClear(renderer);
-        SDL_RenderTexture(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer_);
+        SDL_RenderTexture(renderer_, texture_, NULL, NULL);
+        SDL_RenderPresent(renderer_);
         SDL_Delay(16);
     }
-
-    MIX_DestroyAudio(audio);
-    MIX_DestroyMixer(mixer);
-    MIX_Quit();
-    SDL_DestroyTexture(texture);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
 };

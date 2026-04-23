@@ -6,6 +6,29 @@
 
 class Game
 {
-    public:
+private:
+    bool running_ = true;
+    SDL_Window *window_;
+    SDL_Renderer *renderer_;
+    SDL_Texture *texture_;
+    MIX_Mixer *mixer_;
+    MIX_Audio *audio_;
+    MIX_Track *track_;
+
+public:
+    Game();
+
+    ~Game();
+
     void run();
+
+    SDL_Window *window() const
+    {
+        return window_;
+    }
+
+    SDL_Renderer *renderer() const
+    {
+        return renderer_;
+    }
 };
