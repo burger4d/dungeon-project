@@ -35,6 +35,7 @@ FetchContent_MakeAvailable(SDL3_mixer)
 
 add_executable(dungeon
     src/dungeon.cc
+    src/game.cc
     src/maze/maze.cc
 )
 
