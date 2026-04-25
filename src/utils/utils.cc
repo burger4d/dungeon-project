@@ -1,7 +1,7 @@
 #include "utils.hh"
 
 Dice::Dice(int n)
-    : rng_(dev_())
+    : rng_(std::random_device{}())
     , dist_(1, n)
     , max_dice_(n)
 {}
@@ -9,6 +9,11 @@ Dice::Dice(int n)
 int Dice::roll()
 {
     return dist_(rng_);
+}
+
+int Dice::get_max()
+{
+    return max_dice_;
 }
 
 Dice d4 = Dice(4);

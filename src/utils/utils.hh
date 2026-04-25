@@ -5,14 +5,13 @@ class Dice
 private:
     int max_dice_;
     ;
-    std::random_device dev_;
     std::mt19937 rng_;
     std::uniform_int_distribution<std::mt19937::result_type> dist_;
 
 public:
     Dice(int n);
-
     int roll();
+    int get_max();
 };
 
 extern Dice d4;
