@@ -66,6 +66,7 @@ target_link_libraries(test_weapon PRIVATE
   gtest_main
   pthread
 )
+gtest_discover_tests(test_weapon)
 
 
 target_link_libraries(dungeon PRIVATE

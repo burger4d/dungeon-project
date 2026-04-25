@@ -21,3 +21,13 @@ public:
     std::string get_damage_info() const;
     std::string get_description() const;
 };
+
+extern Weapon knife;
+extern Weapon club;
+extern Weapon swordcane;
+extern Weapon pistol;
+extern Weapon rifle;
+extern Weapon bayonnet;
+extern Weapon saber;
+extern Weapon axe;
+extern Weapon hatchet;
