@@ -68,6 +68,19 @@ target_link_libraries(test_weapon PRIVATE
 )
 gtest_discover_tests(test_weapon)
 
+add_executable(test_dice
+  src/utils/utils.cc
+  src/utils/test-dice.cc
+)
+
+target_include_directories(test_dice PRIVATE include)
+
+target_link_libraries(test_dice PRIVATE
+  gtest
+  gtest_main
+  pthread
+)
+gtest_discover_tests(test_dice)
 
 target_link_libraries(dungeon PRIVATE
     SDL3::SDL3
