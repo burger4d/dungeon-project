@@ -7,10 +7,12 @@ Game::Game()
     window_ = SDL_CreateWindow("dungeon", 400, 400, SDL_WINDOW_RESIZABLE);
     renderer_ = SDL_CreateRenderer(window_, NULL);
 
-    texture_ = IMG_LoadTexture(renderer_, "images/catacombes.jpeg");
+    current_scene_ = new Scene();
+    current_scene_->load_texture(*this, "bg", "images/catacombes.jpeg");
 
     MIX_Init();
     mixer_ = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+
     if (!mixer_)
     {
         SDL_Log("MIX_CreateMixerDevice failed: %s", SDL_GetError());
@@ -39,7 +41,8 @@ Game::~Game()
     MIX_DestroyAudio(audio_);
     MIX_DestroyMixer(mixer_);
     MIX_Quit();
-    SDL_DestroyTexture(texture_);
+    current_scene_->exit();
+    // SDL_DestroyTexture(texture_);
     SDL_DestroyRenderer(renderer_);
     SDL_DestroyWindow(window_);
     SDL_Quit();
@@ -55,7 +58,8 @@ void Game::run()
                 running_ = false;
 
         SDL_RenderClear(renderer_);
-        SDL_RenderTexture(renderer_, texture_, NULL, NULL);
+        current_scene_->render(*this);
+        // SDL_RenderTexture(renderer_, texture_, NULL, NULL);
         SDL_RenderPresent(renderer_);
         SDL_Delay(16);
     }

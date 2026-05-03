@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Dungeon)
+project(Catacombes)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -33,9 +33,10 @@ set(SDLMIXER_SDL3 ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(SDL3_mixer)
 
-add_executable(dungeon
-    src/dungeon.cc
+add_executable(catacombes
+    src/main.cc
     src/game.cc
+    src/scene/scene.cc
     src/utils/utils.cc
     src/weapon/weapon.cc
     src/maze/maze.cc
@@ -82,7 +83,7 @@ target_link_libraries(test_dice PRIVATE
 )
 gtest_discover_tests(test_dice)
 
-target_link_libraries(dungeon PRIVATE
+target_link_libraries(catacombes PRIVATE
     SDL3::SDL3
     SDL3_image::SDL3_image
     SDL3_mixer::SDL3_mixer
